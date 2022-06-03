@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Hozon</string>
+    <string name="textview">TextView</string>
+    <string name="show_allInfos">詳しい情報を見る</string>
+    <string name="DeleteBook">削除</string>
+</resources>
