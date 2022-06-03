@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/layout/debug_mode.xml" value="0.4" />
+        <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/layout/debug_mode.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/layout/register_scene.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/menu/bookinfomation.xml" value="0.6" />
         <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/menu/delete_OK.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/Hozon/app/src/main/res/menu/nagaori_menu.xml" value="0.536" />
         <entry key="..\:/Users/hokuriku/AndroidStudioProjects/Hozon/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.188" />

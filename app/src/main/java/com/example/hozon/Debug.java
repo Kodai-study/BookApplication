@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.sql.Ref;
 import java.util.List;
 
 public class Debug extends AppCompatActivity {
@@ -39,7 +40,6 @@ public class Debug extends AppCompatActivity {
         ViewInit();
         Allbooks.setOnItemLongClickListener((a,b,c,d)->{return false;});
         registerForContextMenu(Allbooks);
-
     }
 
     @Override
@@ -49,8 +49,8 @@ public class Debug extends AppCompatActivity {
         inflater.inflate(R.menu.nagaori_menu,contextMenu);
         contextMenu.setHeaderTitle("コンテキストメニュー");
         int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-
-        message.setText(Allbooks.getItemAtPosition(position).toString());
+        this.selectBook = Allbooks.getItemAtPosition(position).toString();
+        message.setText(selectBook);
     }
 
     private void ViewInit(){
@@ -71,9 +71,16 @@ public class Debug extends AppCompatActivity {
         message = findViewById(R.id.debug_pronpt);
         Allbooks.setOnItemSelectedListener(new ListSelect());
 
-        Allbooks.setOnItemClickListener(new B());
-        message.setText("hoge");
+        Allbooks.setOnItemClickListener(new BookListClick());
+
     }
+
+    public void Refresh(){
+        ArrayAdapter<String> SpinnerAdapter = new ArrayAdapter<String>(this,
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,output.allBookName);
+        Allbooks.setAdapter(SpinnerAdapter);
+    }
+
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
@@ -81,10 +88,15 @@ public class Debug extends AppCompatActivity {
 
         switch(item.getItemId()){
             case R.id.bookInfomation:
-
+                int j = output.delete("eww.dat");
+                if (j != 1) {
+                    message.setText("削除できません" + j);
+                }
                 break;
             case R.id.deleteBook:
-                new DeleteDialog().show(getSupportFragmentManager(), "delete");
+                new DeleteDialog(selectBook,output,this).
+                        show(getSupportFragmentManager(), "delete");
+                Refresh();
                 break;
             default:
                 return false;
@@ -107,7 +119,7 @@ public class Debug extends AppCompatActivity {
         }
     }
 
-    class B implements AdapterView.OnItemClickListener{
+    class BookListClick implements AdapterView.OnItemClickListener{
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

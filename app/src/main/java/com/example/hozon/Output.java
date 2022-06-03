@@ -3,6 +3,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.*;
+import java.sql.Ref;
 import java.util.*;
 
 public class Output {
@@ -10,7 +11,7 @@ public class Output {
     private String path;                                //ファイルを読み書きするためのディレクトリのパスが入る。
     final private static String name = "Genre_names";   //ジャンルファイルのファイル名。
     Genre genre;                                        //ジャンルを管理するインスタンス
-
+    String[] allBookName;
     /*  */
     public Output(String path) {
 
@@ -23,6 +24,7 @@ public class Output {
             if(!write(name, genre))
                 Log.w("OUTPUT", "Output: ");
         }
+        Reflesh();
     }
 
 
@@ -89,12 +91,22 @@ public class Output {
     }
 
     public int delete(String book_name){
-        File def_file = new File(this.path + book_name);
-        if(def_file == null)
+        File deleteFile;
+        int resultState = -1;
+        if(!book_name.endsWith(".dat"))
+            deleteFile = new File(this.path + "/" + book_name + ".dat");
+
+        else
+            deleteFile = new File(this.path + "/"  + book_name);
+        if(deleteFile == null) {
             return -1;
-        if(def_file.delete())
+        }
+        else if(deleteFile.delete()) {
+            Reflesh();
             return 1;
-        return 0;
+        }
+            Log.d("fuck",deleteFile.getAbsolutePath());
+            return 0;
     }
 
     public List<Book> all_books(){
@@ -113,6 +125,15 @@ public class Output {
     }
 
     public String[] allBookName(){
+
+        return this.allBookName;
+    }
+
+    public boolean Regestar_book(Book b){
+        return(write(b.getName(),b));
+    }
+
+    public void Reflesh(){
         List<String> BookList = new ArrayList<String>();
         File file = new File(this.path);
         for(File e : file.listFiles()){
@@ -120,11 +141,6 @@ public class Output {
         }
         String[] st = new String[BookList.size()];
         BookList.toArray(st);
-        return st;
+        this.allBookName = st;
     }
-
-    public boolean Regestar_book(Book b){
-        return(write(b.getName(),b));
-    }
-
 }
