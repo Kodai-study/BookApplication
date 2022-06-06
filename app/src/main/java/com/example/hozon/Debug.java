@@ -23,9 +23,9 @@ public class Debug extends AppCompatActivity {
     final public int a = 100;
     TextView allBooks;
     TextView allGenres;
-    File file;
-    Output output;
-    ListView Allbooks;
+    File file;          //本のデータなどが入っている、ファイルパス(output作成用)
+    Output output;      //データファイルのやり取りを行うoutputクラス
+    ListView Allbooks;  /**　TODO　レガシーなUIタイプのため、新しいものに置き換える　*/
     List<Book> bookList;
     Spinner AllGenres;
     String selectBook;
