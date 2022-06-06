@@ -27,9 +27,10 @@ public class Debug extends AppCompatActivity {
     Output output;      //データファイルのやり取りを行うoutputクラス
     ListView Allbooks;  /**　TODO　レガシーなUIタイプのため、新しいものに置き換える　*/
     List<Book> bookList;
-    Spinner AllGenres;
-    String selectBook;
-    TextView message;
+    Spinner AllGenres; //ドロップダウンメニューでジャンルを表示
+    String selectBook; //選択、またはコンテキストメニューが作られたときに触られた要素(本の名前)
+    TextView message;  ///Debug
+
 
 
 
