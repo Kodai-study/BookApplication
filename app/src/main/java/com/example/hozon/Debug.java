@@ -30,7 +30,7 @@ public class Debug extends AppCompatActivity {
     Spinner AllGenres; //ドロップダウンメニューでジャンルを表示
     String selectBook; //選択、またはコンテキストメニューが作られたときに触られた要素(本の名前)
     TextView message;  ///Debug
-
+    TextView bookInformation;
 
 
 
@@ -41,6 +41,7 @@ public class Debug extends AppCompatActivity {
         ViewInit();
         Allbooks.setOnItemLongClickListener((a,b,c,d)->{return false;});
         registerForContextMenu(Allbooks);
+        message.setOnClickListener(new AllDelete());
     }
 
     @Override
@@ -73,7 +74,7 @@ public class Debug extends AppCompatActivity {
         Allbooks.setOnItemSelectedListener(new ListSelect());
 
         Allbooks.setOnItemClickListener(new BookListClick());
-
+        bookInformation = findViewById(R.id.bookInformtions);
     }
 
     public void Refresh(){
@@ -89,10 +90,9 @@ public class Debug extends AppCompatActivity {
 
         switch(item.getItemId()){
             case R.id.bookInfomation:
-                int j = output.delete("eww.dat");
-                if (j != 1) {
-                    message.setText("削除できません" + j);
-                }
+                //showBookInformation(selectBook);
+                new BookInformation(selectBook,output,this).
+                        show(getSupportFragmentManager(), "delete");
                 break;
             case R.id.deleteBook:
                 new DeleteDialog(selectBook,output,this).
@@ -126,6 +126,26 @@ public class Debug extends AppCompatActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             message.setText((String)adapterView.getItemAtPosition(i));
         }
+    }
+
+    class AllDelete implements View.OnClickListener{
+        int count = 0;
+        @Override
+        public void onClick(View view) {
+            if(++count >= 10) {
+                for(String e : output.allBookName()){
+                    if(!e.contains("genre"))
+                        output.delete(e);
+                }
+            }
+        }
+    }
+
+    private void showBookInformation(String bookName){
+        Book selectBook = output.<Book>Read(bookName);
+        bookInformation.setText(selectBook.get_data(output.genre));
+        bookInformation.setVisibility(View.VISIBLE);
+        this.message.setText(selectBook.get_data(output.genre));
     }
 
 }

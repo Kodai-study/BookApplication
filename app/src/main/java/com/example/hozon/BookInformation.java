@@ -13,13 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-public class DeleteDialog extends DialogFragment {
+public class BookInformation extends DialogFragment {
 
     String deleteBookName;
     Output output;
     Debug debug;
 
-    public DeleteDialog(String deleteBookName,Output output,Debug debug){
+    public BookInformation(String deleteBookName,Output output,Debug debug){
         this.deleteBookName = deleteBookName;
         this.output = output;
         this.debug = debug;
@@ -27,23 +27,19 @@ public class DeleteDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle bundle){
+        Book selectBook = output.<Book>Read(deleteBookName);
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setTitle(deleteBookName + " を削除しますか?");
-        dialog.setNegativeButton("キャンセル",null);
-        dialog.setPositiveButton("削除します", new DialogInterface.OnClickListener() {
+        dialog.setMessage(selectBook.get_data(output.genre));
+        dialog.setTitle(deleteBookName + " の詳細");
+        dialog.setPositiveButton("削除する", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(output.delete(deleteBookName) == output.FILE_DELETE_SUCCESS) {
-                    debug.Refresh();
-                }
-                else{
-                    Toast noDeletePopup = Toast.makeText(
-                            debug.getApplicationContext(),deleteBookName + "が削除できません",Toast.LENGTH_LONG
-                    );
-                    noDeletePopup.show();
-                }
+                new DeleteDialog(deleteBookName,output,debug).
+                        show(debug.getSupportFragmentManager(), "delete");
             }
         });
+        dialog.setNegativeButton("閉じる", (a,b) -> {onDestroyView();});
 
         return dialog.create();
     }

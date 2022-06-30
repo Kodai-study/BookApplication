@@ -1,5 +1,6 @@
 package com.example.hozon;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,8 @@ public class Book implements Serializable{
     String new_genre;
     Calendar first_day;
     final String no_name = "名前の入力なし";
+    final String DATAFORMAT = "yyyy/MM/dd";
+
 
 
     public Book(String name,int genre_id,Calendar first_day){
@@ -22,6 +25,7 @@ public class Book implements Serializable{
         this.genre_num = genre_id;
         this.new_genre = null;
         this.first_day = first_day;
+
     }
     public Book(String name,int genre_id){
 
@@ -45,11 +49,12 @@ public class Book implements Serializable{
     public String getName(){ return name; }
 
     public String get_data(Genre genre){
+        SimpleDateFormat format = new SimpleDateFormat(DATAFORMAT);
 
         String st = "名前 : " + this.name;
         st += "\nジャンル : " + genre.get_genre(this);
         st += "\nジャンルのid :" + this.genre_num;
-        st += "\n読み始め : " + this.first_day.getTime();
+        st += "\n読み始め : " + format.format(this.first_day.getTime());
         return st;
     }
 

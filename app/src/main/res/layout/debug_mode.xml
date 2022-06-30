@@ -10,13 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/debug_pronpt"
             android:layout_width="match_parent"
             android:layout_height="118dp"
-            android:text="@string/textview" />
+            android:text="@string/textview"
+            tools:visibility="visible" />
 
         <Spinner
             android:id="@+id/Allgenres"
@@ -27,7 +29,18 @@
         <ListView
             android:id="@+id/AllBooks"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/bookInformtions"
+            android:layout_width="match_parent"
+            android:layout_height="127dp"
+            android:text="TextView"
+            tools:text="asd"
+            tools:visibility="gone" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

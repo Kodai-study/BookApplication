@@ -12,6 +12,9 @@ public class Output {
     final private static String name = "Genre_names";   //ジャンルファイルのファイル名。
     Genre genre;                                        //ジャンルを管理するインスタンス
     String[] allBookName;
+    public final int FILE_NOT_FOUND = -1;
+    public final int FILE_CANT_DELETE = 0;
+    public final int FILE_DELETE_SUCCESS = 1;
     /*  */
     public Output(String path) {
 
@@ -66,14 +69,21 @@ public class Output {
     }
 
     /* 型名を指定し、ファイル名を受け取って ストレージ内にあるオブジェクトデータを読み込んでインスタンスを返す。 */
-    private <T> T Read(String name){//throws FileNotFoundException,IOException,ClassNotFoundException{
+    public <T> T Read(String name){//throws FileNotFoundException,IOException,ClassNotFoundException{
         try {
             FileInputStream f;
-            if(name.endsWith(".dat"))
-                f = new FileInputStream(name);
-            else
-                f = new FileInputStream(path + "/" + name + ".dat");
-
+            if(name.startsWith(path)){
+                 if(name.endsWith(".dat"))
+                     f = new FileInputStream(name);
+                 else
+                     f = new FileInputStream(name + ".dat");
+            }
+            else {
+                if(name.endsWith(".dat"))
+                    f = new FileInputStream(path + "/" +name);
+                else
+                    f = new FileInputStream(path + "/" + name + ".dat");
+            }
             BufferedInputStream b = new BufferedInputStream(f);
             ObjectInputStream in = new ObjectInputStream(b);
             T ret = (T) in.readObject();
@@ -99,14 +109,14 @@ public class Output {
         else
             deleteFile = new File(this.path + "/"  + book_name);
         if(deleteFile == null) {
-            return -1;
+            return this.FILE_NOT_FOUND;
         }
         else if(deleteFile.delete()) {
             Reflesh();
-            return 1;
+            return FILE_DELETE_SUCCESS;
         }
             Log.d("fuck",deleteFile.getAbsolutePath());
-            return 0;
+            return FILE_CANT_DELETE;
     }
 
     public List<Book> all_books(){

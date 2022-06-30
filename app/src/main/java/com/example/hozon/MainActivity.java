@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,14 +24,13 @@ public class MainActivity extends AppCompatActivity {
     Output output;
     File file;
     Button button;
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         text = findViewById(R.id.textView);
-        spinner = findViewById(R.id.spinner);
-        button = findViewById(R.id.button);
 
         Context context =  getApplicationContext();
         file = context.getFilesDir();
