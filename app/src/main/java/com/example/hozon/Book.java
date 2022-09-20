@@ -1,4 +1,6 @@
 package com.example.hozon;
+import androidx.annotation.NonNull;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -48,7 +50,7 @@ public class Book implements Serializable{
 
     public String getName(){ return name; }
 
-    public String get_data(Genre genre){
+    public String get_data(@NonNull Genre genre){
         SimpleDateFormat format = new SimpleDateFormat(DATAFORMAT);
 
         String st = "名前 : " + this.name;

@@ -8,11 +8,19 @@ android {
     defaultConfig {
         applicationId "com.example.hozon"
         minSdk 23
-        targetSdk 31
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    task wrapper(type: Wrapper){
+        gradleVersion = '7.21'
+    }
+
+    task prepareKotlinBuildScriptModel {
+
     }
 
     buildTypes {
