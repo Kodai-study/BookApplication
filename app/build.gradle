@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.hozon"
         minSdk 23
-        targetSdk 30
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -16,12 +16,13 @@ android {
     }
 
     task wrapper(type: Wrapper){
-        gradleVersion = '7.21'
+        gradleVersion = '7.3'
     }
 
     task prepareKotlinBuildScriptModel {
 
     }
+
 
     buildTypes {
         release {

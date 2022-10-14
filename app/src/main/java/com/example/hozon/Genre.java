@@ -3,11 +3,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
+/**
+ * ジャンルについて、一覧票を管理したりするクラス
+ */
 public class Genre implements Serializable{
 
-    List<String> genre_names = new ArrayList<String>(); //ジャンル名を全てまとめておく
+    /**
+     * ジャンル名を全てまとめておくリスト
+     */
+    List<String> genre_names = new ArrayList<String>();
 
-    /* ジャンルが既に存在していればそのインデックスを返し、存在していなければ作成して新たなインデックスを返す */
+    /**
+     * ジャンル名が存在しているかの検索
+     *   新たに入力されたときに、存在しているかどうか
+     *
+     * @param genre ジャンル名
+     * @return 既に存在していればそのIDを、存在していなければ新たに作成して渡す
+     */
     public int serch(String genre){
 
         if(!genre_names.contains(genre)){
@@ -20,12 +32,19 @@ public class Genre implements Serializable{
         return -(genre_names.indexOf(genre));
     }
 
+    /**
+     * ジャンルの数を返す
+     */
     /* 今あるジャンルの数=genre_namesの大きさを返す */
     public int getGenreSize(){
         return genre_names.size();
     }
 
-    /* ジャンル名を、見やすく全てを表示する文字列を作成して返す */
+    /**
+     * ジャンル名を、見やすく全てを表示する文字列を作成して返す
+     * @return 1行ごとにジャンルを表示した文字列
+     */
+
     public String check_genres(){
         int cnt = 0;
         StringBuilder st = new StringBuilder("ジャンルの種類----------------\n");
@@ -37,11 +56,20 @@ public class Genre implements Serializable{
         return st.toString();
     }
 
-/* ジャンルの要素全てを、String型の配列にして返す(参照によって悪いことが起こらないため) */
+    /**
+     * ジャンル一覧の、文字列配列で取得する
+     * @return string [ ]
+     */
+    /* ジャンルの要素全てを、String型の配列にして返す(参照によって悪いことが起こらないため) */
     public String[] getGenreList(){
         return genre_names.toArray(new String[genre_names.size()]);
     }
 
+    /**
+     * Bookインスタンスを受け取って、該当するジャンル名を返す
+     * @param book ジャンルを調べたいBook
+     * @return ジャンルの文字列
+     */
     /* ブックを引数に受け取って、該当するジャンルを返す */
     public String get_genre(Book book){
         return genre_names.get(book.getGenreId());
