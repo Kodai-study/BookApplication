@@ -18,20 +18,39 @@ import java.io.File;
 import java.sql.Ref;
 import java.util.List;
 
+/**
+ * The type Debug.
+ */
 public class Debug extends AppCompatActivity {
 
-    final public int a = 100;
-    TextView allBooks;
-    TextView allGenres;
-    File file;          //本のデータなどが入っている、ファイルパス(output作成用)
-    Output output;      //データファイルのやり取りを行うoutputクラス
-    ListView Allbooks;  /**　TODO　レガシーなUIタイプのため、新しいものに置き換える　*/
-    List<Book> bookList;
-    Spinner AllGenres; //ドロップダウンメニューでジャンルを表示
-    String selectBook; //選択、またはコンテキストメニューが作られたときに触られた要素(本の名前)
-    TextView message;  ///Debug
+    /**
+     * 本のデータなどが入っている、ファイルパス(output作成用)
+     */
+    File file;
+    /**
+     * データファイルのやり取りを行うoutputクラス
+     */
+    Output output;
+    /**
+     * フォルダの中にあるファイル一覧
+     */
+    ListView Allbooks;
+    /**
+     * ドロップダウンメニューでジャンルを表示
+     */
+    Spinner AllGenres;
+    /**
+     * 選択、またはコンテキストメニューが作られたときに触られた要素(本の名前)
+     */
+    String selectBook;
+    /**
+     * デバッグ用のメッセージ表示
+     */
+    TextView message;
+    /**
+     * The Book information.
+     */
     TextView bookInformation;
-
 
 
     @Override
@@ -55,6 +74,11 @@ public class Debug extends AppCompatActivity {
         message.setText(selectBook);
     }
 
+
+    /**
+     * 画面に使われるViewたちの初期化。
+     * レイアウトからの取得とイベントハンドラの割り当て
+     */
     private void ViewInit(){
         file = getApplicationContext().getFilesDir();
         output = new Output(file.getAbsolutePath());
@@ -77,24 +101,27 @@ public class Debug extends AppCompatActivity {
         bookInformation = findViewById(R.id.bookInformtions);
     }
 
+    /**
+     * フォルダ内のファイル一覧を再読み込みする
+     */
     public void Refresh(){
+        output.Reflesh();
         ArrayAdapter<String> SpinnerAdapter = new ArrayAdapter<String>(this,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,output.allBookName);
         Allbooks.setAdapter(SpinnerAdapter);
     }
 
-
+    /* 長押しで出て来るコンテキストメニューを触ったときの処理 */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
-
         switch(item.getItemId()){
-            case R.id.bookInfomation:
-                //showBookInformation(selectBook);
+
+            case R.id.bookInfomation:       //詳細情報を触ったとき、詳細情報のダイアログを表示
                 new BookInformation(selectBook,output,this).
                         show(getSupportFragmentManager(), "delete");
                 break;
-            case R.id.deleteBook:
+            case R.id.deleteBook:           //削除を選択したとき、本当に削除しますか?のダイアログを表示
                 new DeleteDialog(selectBook,output,this).
                         show(getSupportFragmentManager(), "delete");
                 Refresh();
@@ -105,6 +132,10 @@ public class Debug extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 本の名前を選択したときの処理
+     * メッセージ欄に今選択したファイルの名前が書かれる
+     */
     class ListSelect implements AdapterView.OnItemSelectedListener {
 
         @Override
@@ -120,6 +151,9 @@ public class Debug extends AppCompatActivity {
         }
     }
 
+    /**
+     * The type Book list click.
+     */
     class BookListClick implements AdapterView.OnItemClickListener{
 
         @Override
@@ -128,6 +162,9 @@ public class Debug extends AppCompatActivity {
         }
     }
 
+    /**
+     * ジャンルオブジェクト以外の全てのオブジェクトを削除する
+     */
     class AllDelete implements View.OnClickListener{
         int count = 0;
         @Override

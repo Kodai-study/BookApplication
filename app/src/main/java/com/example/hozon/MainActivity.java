@@ -17,20 +17,40 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.List;
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * The Text.
+     */
     TextView text;
+    /**
+     * The Spinner.
+     */
     Spinner spinner;
+    /**
+     * The Output.
+     */
     Output output;
+    /**
+     * The File.
+     */
     File file;
+    /**
+     * The Button.
+     */
     Button button;
+    /**
+     * The Scroll view.
+     */
     ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        text = findViewById(R.id.textView);
 
         Context context =  getApplicationContext();
         file = context.getFilesDir();
@@ -60,9 +80,17 @@ public class MainActivity extends AppCompatActivity {
             output.finish();
         }
    }
+
+    /**
+     * The type Input process.
+     */
     class InputProcess {
 
         private int dropdown_position;
+
+        /**
+         * The type Doropdown proces.
+         */
         class Doropdown_proces implements AdapterView.OnItemSelectedListener{
             @Override
             public void onItemSelected(AdapterView<?>adapterView, View view, int position, long id){
@@ -78,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView){
                 text.setText((String)spinner.getSelectedItem());
             }
+
+            /**
+             * Get doropdown int.
+             *
+             * @return the int
+             */
             public int getDoropdown(){ return dropdown_position; }
         }
 

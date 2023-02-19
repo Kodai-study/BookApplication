@@ -13,11 +13,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * デバッグ画面で、「削除する」を選択した時に、削除の再確認を行うダイアログ
+ */
 public class DeleteDialog extends DialogFragment {
 
+    /**
+     * 削除するファイルの名前
+     */
     String deleteBookName;
+
     Output output;
+    /**
+     * 元のデバッグ画面を変更する。
+     */
     Debug debug;
+
 
     public DeleteDialog(String deleteBookName,Output output,Debug debug){
         this.deleteBookName = deleteBookName;
@@ -25,6 +36,7 @@ public class DeleteDialog extends DialogFragment {
         this.debug = debug;
     }
 
+    /* "本当に削除しますか?"を表示して削除が押されたらフォルダから削除する */
     @Override
     public Dialog onCreateDialog(Bundle bundle){
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -32,6 +44,7 @@ public class DeleteDialog extends DialogFragment {
         dialog.setNegativeButton("キャンセル",null);
         dialog.setPositiveButton("削除します", new DialogInterface.OnClickListener() {
             @Override
+            /* 削除を試して、削除できなかったらポップアップを表示 */
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(output.delete(deleteBookName) == output.FILE_DELETE_SUCCESS) {
                     debug.Refresh();

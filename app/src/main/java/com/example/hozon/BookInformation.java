@@ -1,7 +1,5 @@
 package com.example.hozon;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -13,8 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * デバッグ画面で"詳細を表示"を選択された時の処理
+ */
 public class BookInformation extends DialogFragment {
 
+    /**
+     * 詳細を表示するファイルの名前
+     */
     String deleteBookName;
     Output output;
     Debug debug;
@@ -25,6 +29,7 @@ public class BookInformation extends DialogFragment {
         this.debug = debug;
     }
 
+    /* ファイルの詳細を表示し、"削除する" "閉じる"の2つのボタンを持つダイアログを表示させる */
     @Override
     public Dialog onCreateDialog(Bundle bundle){
         Book selectBook = output.<Book>Read(deleteBookName);
