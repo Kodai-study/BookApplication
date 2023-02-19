@@ -1,9 +1,9 @@
 plugins {
-    id 'com.android.application'
+    id 'com.example.hozon'
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.hozon"
